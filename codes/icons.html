@@ -8,7 +8,7 @@
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
 
 <center>
-    <div id="Beispiel_Icons" style="max-width: 800px; height: 500px"></div>
+    <div id="2023_05_Anzahl_Autos_Velos_kombiniert_2021" style="max-width: 800px; height: 600px"></div>
 </center>
     <script>
 		$(document).ready(function() {
@@ -25,14 +25,14 @@
         		}
             };
             var title = {
-                text: 'TITEL',
+                text: 'Fast 90 % der Thurgauer Haushalte haben mindestens ein Auto',
                 style: {
                     fontSize: '18px'
                 },
                 align: 'left'
             };
             var subtitle = {
-                text: 'UNTERTITEL',
+                text: 'Thurgauer Haushalte nach Anzahl betriebsbereiter Autos, Kanton Thurgau, 2021, Anteile in %',
                 style: {
                     fontSize: '12px'
                 },
@@ -44,34 +44,149 @@
                 title: {
                 	text: ''
                 },
-                lineWidth: 1
+                lineWidth: 1,
+                min: 0,
+                max: 55
             };
             var xAxis = {
-            	categories: ['kein Auto', '1 Auto', '2 Autos', '3 Autos', 'mehr als 3 Autos'],
+            	categories: ['','kein Fahrzeug','', '1 Fahrzeug', '','2 Fahrzeuge', '','3 Fahrzeuge', '','mehr als 3 Fahrzeuge'],
                 title: {
                 	text:''
                 }
             };
             var series = [{
-                	name: 'Minimum',
-                    data: [12,48,29,7,2],
+                    name: "Anteil Autos",
+                    type: "column",
+                    data: [13,'',47, '',30, '',8, '',2,''],
+                    color: "#0064e6"
+                },{
+                	name: 'Anteil Autos',
+                    data: [13,'', '', '','', '','', '','',''],
                     color: 'transparent',
                     marker: {
-            symbol: "url(http://www.fahrschule-deeken.de/assets/img/piktogramme/Auto.png)"
-        }
+            			symbol: "url(https://img.icons8.com/ios/50/000000/walking-filled.png)",
+                        width: 80,
+                        height: 80
+       	 				}
+                    }, {
+                    name: 'Anteil Autos',
+                    data: ['','', 47, '',30, '',8, '',2,''],
+                    color: 'transparent',
+                    marker: {
+            			symbol: "url(https://img.icons8.com/ios/50/000000/fiat-500-filled.png)",
+                        width: 80,
+                        height: 80
+       	 				}
+                    }, {
+					name: 'help1',
+                    data: ['','', '', '',24, '',12, '',7,''],
+                    color: 'transparent',
+                    marker: {
+            			symbol: "url(https://img.icons8.com/ios/50/000000/fiat-500-filled.png)",
+                        width: 80,
+                        height: 80
+       	 				}
+                    }, {
+					name: 'help2',
+                    data: ['','', '', '','', '',2, '',12,''],
+                    color: 'transparent',
+                    marker: {
+            			symbol: "url(https://img.icons8.com/ios/50/000000/fiat-500-filled.png)",
+                        width: 80,
+                        height: 80
+       	 				}
+                    }, {
+					name: 'help3',
+                    data: ['','', '', '','', '','', '',17,''],
+                    color: 'transparent',
+                    marker: {
+            			symbol: "url(https://img.icons8.com/ios/50/000000/fiat-500-filled.png)",
+                        width: 80,
+                        height: 80
+       	 				}
+                    }, {
+					name: 'help4',
+                    data: ['','', '', '','', '','', '',22,''],
+                    color: 'transparent',
+                    marker: {
+            			symbol: "url(https://img.icons8.com/ios/50/000000/fiat-500-filled.png)",
+                        width: 80,
+                        height: 80
+       	 				}
+            	}, {
+                    name: 'Anteil Velos',
+                    data: ['',20, '',23,'',25,'',13,'',20],
+                    type: "column",
+                    color: '#0064e6',
+                },
+            {
+                	name: 'Anteil Velos',
+                    data: ['',20, '', '','', '','', '','',''],
+                    color: 'transparent',
+                    marker: {
+            			symbol: "url(https://img.icons8.com/ios/50/000000/walking-filled.png)",
+                        width: 80,
+                        height: 80
+       	 				}
+                    }, {
+                    name: 'Anteil Velos',
+                    data: ['','', '',23,'',25,'',13,'',20],
+                    color: 'transparent',
+                    marker: {
+            			symbol: "url(https://img.icons8.com/ios/50/000000/bicycle.png)",
+                        width: 80,
+                        height: 80
+       	 				}
+                   
+                   
             	}
+                
             ];
             
 			var tooltip = {
-            	enabled: true
-  			};
-            
+                formatter: function() {
+					if (this.series.name == "help1" & this.key=='2 Autos') {
+                    	return '2 Autos<br> ' + 'Anteil Haushalte: 29 %';
+                     } else {
+                     if (this.series.name == "help1" & this.key=='3 Autos') {
+                    	return '3 Autos<br> ' + 'Anteil Haushalte: 7 %';
+                     } else {
+                     if (this.series.name == "help1" & this.key=='mehr als 3 Autos') {
+                    	return 'mehr als 3 Autos<br> ' + 'Anteil Haushalte: 2 %';
+                     } else {
+                     if (this.series.name == "help2" & this.key=='3 Autos') {
+                    	return '3 Autos<br> ' + 'Anteil Haushalte: 7 %';
+                     } else {
+                     if (this.series.name == "help2" & this.key=='mehr als 3 Autos') {
+                    	return 'mehr als 3 Autos<br> ' + 'Anteil Haushalte: 2 %';                        
+                     } else {
+                     if (this.series.name == "help3" & this.key=='mehr als 3 Autos') {
+                    	return 'mehr als 3 Autos<br> ' + 'Anteil Haushalte: 2 %';
+                     } else {
+                     if (this.series.name == "help4" & this.key=='mehr als 3 Autos') {
+                    	return 'mehr als 3 Autos<br> ' + 'Anteil Haushalte: 2 %';
+                     } else {
+                     if (this.series.name == "help2") {
+                    	return '';
+                     } else {
+                     if (this.series.name == "help3") {
+                    	return '';
+                     } else {
+                     if (this.series.name == "help4") {
+                    	return '';
+                     } else {
+                        	return this.x + '<br> ' + this.series.name + ': ' + this.y.toFixed(0) + ' %';
+                        }
+                	}}}}}}}}}
+                    
+                }
+             };
             var legend = {
                 	enabled: false
             };
             
-            var credits = {
-    			text: 'Dienststelle für Statistik Kanton Thurgau<br>Datenquelle: Steuerverwaltung Kanton Thurgau',
+             var credits = {
+    			text: 'Dienststelle für Statistik Kanton Thurgau <br>Datenquelle: BFS/ARE, Mikrozensus Mobilität und Verkehr<br>Bildquelle: <a href="https://icons8.com">Icon pack by Icons8</a>',
     			href: false,
                 style: {
                 	color:'#999999',
@@ -81,20 +196,31 @@
     			position: {
       				align: 'left',
       				x: 10,
-      				median: -20
+      				y: -30
     			}
   			};
             var exporting = {
             	allowHTML: true,
-            	enabled: true,
-                filename:'Beispiel_Icons',
+            	enabled: true,                					  
+               	filename:'2018_11_Tagesdistanz_Zweck_2015',
             	buttons: {
                 	contextButton: {
                     	menuItems: "printChart separator downloadPNG downloadJPEG downloadSVG".split(" ")
                     }
-            	}
+            	},
+                /*csv: {
+                    columnHeaderFormatter: function (item) {
+                    	if(item instanceof Highcharts.Axis) {
+                        	return 'Quartal';
+                        } else {
+                        	if(item instanceof Highcharts.Series) {
+                        		return item.name;
+                            }
+                        }
+                    }
+                }*/
             };
-          	
+            
             var highchartsOptions = Highcharts.setOptions ({
         		lang: {
         			decimalPoint: '.',
@@ -102,7 +228,6 @@
            		 	months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
             		weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
             		shortMonths: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-
             		contextButtonTitle: 'Drucken, Download, Export',
             		downloadJPEG: 'Download JPEG Bild',
             		downloadPNG: 'Download PNG Bild',
@@ -112,8 +237,7 @@
             		viewData: 'Datentabelle ein-/ausblenden',
             		resetZoom: "Zoom zurücksetzen",
             		resetZoomTitle: "Zoom zurücksetzen",
-            		drillUpText: "Zurück",
-                    numericSymbols: null 
+            		drillUpText: "Zurück"
         		}        
 			});
 			
@@ -134,7 +258,7 @@
             json.highchartsOptions = highchartsOptions;
 
 
-            $('#Beispiel_Icons').highcharts(json);
+            $('#2023_05_Anzahl_Autos_Velos_kombiniert_2021').highcharts(json);V
         });
 function addThousandsep(nStr) { 
                                nStr += ''; 
