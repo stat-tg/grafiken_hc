@@ -1,0 +1,408 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://blacklabel.github.io/grouped_categories/grouped-categories.js"></script>
+<script src="https://code.highcharts.com/modules/annotations.js"></script>
+</head>
+
+<center>
+
+<div id="2023_12_Todesursachen_Geschlecht_Altersklassen_2022" style="max-width: 800px; height: 630px"></div>
+
+<script>
+$(document).ready(function() {
+       var chart = {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,//null,
+            plotShadow: false,
+            marginBottom: 180
+        };
+        
+        var title = {
+            text: 'Männer sterben eher jünger und häufiger an Krebs, Frauen häufiger mit über 85 Jahren und an Herz-Kreislauferkrankungen',
+            style: {
+            	fontSize: '18px'
+                },
+            align: 'left'
+        };
+        
+        var subtitle = {
+        	text: 'Anzahl Sterbefälle nach Altersklassen, Geschlecht und Todesursache, Kanton Thurgau, 2022, in %',
+            style: {
+            	fontSize: '12px'
+                },
+            align: 'left'
+            };
+
+        
+        var yAxis = {
+                gridLineWidth: 0,
+                title: '',
+                lineWidth: 0,
+                max: 25,
+            };
+            
+        var plotOptions = {
+            pie: {
+                point: {
+            		events: {
+                		legendItemClick: function () {
+                    return false; 
+               			}
+            		}
+    			},
+    			allowPointSelect: false
+            }
+        };
+        
+        var annotations = [{
+        	 labels: [{
+            	point: {
+                	x: 40,
+                	y: 10
+            		},
+            	text: '0-44 Jahre'
+        		},
+        		{
+            	point: {
+                	x: 130,
+                	y: 10
+            	},
+            	text: '45-64 Jahre'
+       			},
+        		{
+              	point: {
+                	x: 255,
+                	y: 10
+            	},
+            	text: '65-84 Jahre'
+                },
+        		{
+              	point: {
+                	x: 420,
+                	y: 10
+            	},
+            	text: '85+ Jahre'
+        		},
+                {
+              	point: {
+                	x: 30,
+                	y: 60
+            	},
+            	text: 'Männer'
+        		},
+                {
+              	point: {
+                	x: 30,
+                	y: 220
+            	},
+            	text: 'Frauen'
+        		}],
+                labelOptions: {
+                	style: {
+                    	color: "black",
+                        fontWeight: 'bold'
+                        },
+                    backgroundColor: null,
+                    borderColor: null
+                    
+               	}             	
+        }];
+        	
+        var series = [{
+            type: 'pie',
+            name: '0-44 Jahre',
+            center: [20, 80],
+            size: 38,
+            dataLabels: {
+				enabled: false
+			},
+            tooltip: {
+            	valueSuffix: ' % (von 38 Fällen)' /* Männer */
+                },
+            showInLegend: false,
+            data: [
+                ['Herz-Kreislauf-Krankheiten',5.3],
+				['Krebserkrankungen',13.2],
+				['COVID-19',0],
+				['Demenz',0],
+				['Atemwegserkrankungen',0],
+				['Krankheiten des Nervensystems',0],
+				['Unfälle und Gewalteinwirkung (ohne Suizid)',28.9],
+				['Suizid',26.3],
+				['Übrige Todesursachen',26.3]
+
+
+                
+            ]
+        },
+                {
+            type: 'pie',
+            name: '45-64 Jahre',
+            center: [110, 80],
+            size: 78,
+            dataLabels: {
+				enabled: false
+			},
+                    showInLegend: false,
+            tooltip: {
+            	valueSuffix: ' % (von 142 Fällen)' /* Männer */
+                },
+            data: [
+                ['Herz-Kreislauf-Krankheiten',19.7],
+['Krebserkrankungen',32.4],
+['COVID-19',2.8],
+['Demenz',0],
+['Atemwegserkrankungen',4.9],
+['Krankheiten des Nervensystems',4.2],
+['Unfälle und Gewalteinwirkung (ohne Suizid)',4.9],
+['Suizid',5.6],
+['Übrige Todesursachen',25.4]
+
+
+            ]},
+                {
+            type: 'pie',
+            name: '65-84 Jahre',
+            center: [240, 80],
+            size: 152,
+            dataLabels: {
+				enabled: false
+			},
+            tooltip: {
+            	valueSuffix: ' % (von 568 Fällen)' /* Männer */
+                },
+            showInLegend: true,
+            data: [
+               ['Herz-Kreislauf-Krankheiten',24.5],
+['Krebserkrankungen',30.3],
+['COVID-19',6.2],
+['Demenz',3.3],
+['Atemwegserkrankungen',5.5],
+['Krankheiten des Nervensystems',5.8],
+['Unfälle und Gewalteinwirkung (ohne Suizid)',4.2],
+['Suizid',1.4],
+['Übrige Todesursachen',18.8]
+
+
+            ]
+            },
+                {
+            type: 'pie',
+            name: '85+ Jahre',
+            center: [410, 80],
+            size: 127,
+            dataLabels: {
+				enabled: false
+			},
+            tooltip: {
+            	valueSuffix: ' % (von 441 Fällen)' /* Männer */
+                },
+            showInLegend: false,
+            data: [
+                ['Herz-Kreislauf-Krankheiten',40.4],
+['Krebserkrankungen',14.3],
+['COVID-19',7],
+['Demenz',7.9],
+['Atemwegserkrankungen',6.6],
+['Krankheiten des Nervensystems',5.2],
+['Unfälle und Gewalteinwirkung (ohne Suizid)',3.9],
+['Suizid',0.7],
+['Übrige Todesursachen',14.1]
+
+
+            ]
+            
+        }, {
+            type: 'pie',
+            name: '0-44 Jahre',
+            center: [20, 240],
+            size: 34,
+            dataLabels: {
+				enabled: false
+			},
+            tooltip: {
+            	valueSuffix: ' % (von 34 Fällen)' /* Frauen */
+                },
+            showInLegend: false,
+            data: [
+                ['Herz-Kreislauf-Krankheiten',2.9],
+['Krebserkrankungen',29.4],
+['COVID-19',0],
+['Demenz',0],
+['Atemwegserkrankungen',0],
+['Krankheiten des Nervensystems',2.9],
+['Unfälle und Gewalteinwirkung (ohne Suizid)',17.6],
+['Suizid',5.9],
+['Übrige Todesursachen',41.2]
+
+
+                
+            ]
+        },
+                {
+            type: 'pie',
+            name: '45-64 Jahre',
+            center: [110, 240],
+            size: 62,
+            dataLabels: {
+				enabled: false
+			},
+                    showInLegend: false,
+            tooltip: {
+            	valueSuffix: ' % (von 82 Fällen)' /* Frauen */
+                },
+            data: [
+				['Herz-Kreislauf-Krankheiten',6.1],
+['Krebserkrankungen',57.3],
+['COVID-19',9.8],
+['Demenz',0],
+['Atemwegserkrankungen',1.2],
+['Krankheiten des Nervensystems',3.7],
+['Unfälle und Gewalteinwirkung (ohne Suizid)',2.4],
+['Suizid',3.7],
+['Übrige Todesursachen',15.9]
+
+
+            ]},
+                {
+            type: 'pie',
+            name: '65-84 Jahre',
+            center: [240, 240],
+            size: 123,
+            dataLabels: {
+				enabled: false
+			},
+            tooltip: {
+            	valueSuffix: ' % (von 421 Fällen)' /* Frauen */
+                },
+            showInLegend: false,
+            data: [
+              ['Herz-Kreislauf-Krankheiten',20.9],
+['Krebserkrankungen',33.3],
+['COVID-19',5],
+['Demenz',5.2],
+['Atemwegserkrankungen',7.4],
+['Krankheiten des Nervensystems',7.4],
+['Unfälle und Gewalteinwirkung (ohne Suizid)',4],
+['Suizid',0.5],
+['Übrige Todesursachen',16.4]
+
+
+            ]
+            },
+                {
+            type: 'pie',
+            name: '85+ Jahre',
+            center: [410, 240],
+            size: 152,
+            dataLabels: {
+				enabled: false
+			},
+            tooltip: {
+            	valueSuffix: ' % (von 622 Fällen)' /* Frauen */
+                },
+            showInLegend: false,
+            data: [
+               ['Herz-Kreislauf-Krankheiten',43.4],
+['Krebserkrankungen',9.2],
+['COVID-19',5.3],
+['Demenz',12.4],
+['Atemwegserkrankungen',3.5],
+['Krankheiten des Nervensystems',4.7],
+['Unfälle und Gewalteinwirkung (ohne Suizid)',4],
+['Suizid',0],
+['Übrige Todesursachen',17.5]
+
+
+            ]
+            
+        }];
+        
+        
+  
+  var legend = {
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
+				padding: 25,
+    			symbolPadding: 10,
+    			symbolWidth: 25,
+                margin: -30,
+				itemStyle: {
+                	fontWeight: 'normal'
+            	}
+            };
+            
+            var credits = {
+    			text: 'Dienststelle für Statistik Kanton Thurgau <br>Datenquelle: Bundesamt für Statistik, Todesursachenstatistik',
+    			href: false,
+                style: {
+                	color:'#999999',
+                    cursor: false,
+                    fontSize:'10px'
+                },
+    			position: {
+      				align: 'left',
+      				x: 10,
+      				y: -20
+    			}
+  			};
+            var exporting = {
+            	allowHTML: true,
+            	enabled: true,
+                filename:'2023_12_Todesursachen_Geschlecht_Altersklassen_2022',
+            	buttons: {
+                	contextButton: {
+                    	menuItems: "printChart separator downloadPNG downloadJPEG downloadSVG separator viewData downloadXLS".split(" ")
+                    }
+            	},
+             
+            };
+
+var highchartsOptions = Highcharts.setOptions ({
+        		lang: {
+        			decimalPoint: '.',
+           		 	thousandsSep: "'",
+           		 	months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            		weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+            		shortMonths: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+            		contextButtonTitle: 'Drucken, Download, Export',
+            		downloadJPEG: 'Download JPEG Bild',
+            		downloadPNG: 'Download PNG Bild',
+            		downloadSVG: 'Download SVG Vektor Bild',
+            		downloadXLS: 'Download XLS',
+            		printChart: 'Bild drucken',
+            		viewData: 'Datentabelle ein-/ausblenden',
+                    hideData: 'Datentabelle ein-/ausblenden',
+            		resetZoom: "Zoom zurücksetzen",
+            		resetZoomTitle: "Zoom zurücksetzen",
+            		drillUpText: "Zurück"
+        		}        
+			});
+			
+            var colors = ['#27408B','#0064e6', '#FF0000' , '#00B4E8','#3CA433','#a2c510','#FFED00','#E39E00','#B5B5B5']
+            
+            var json = {};
+            json.chart = chart;
+            json.title = title;
+            json.annotations = annotations;
+            json.plotOptions = plotOptions;
+            json.subtitle = subtitle;
+            json.yAxis = yAxis;
+            /*json.xAxis = xAxis;*/
+            json.series = series;
+            json.legend = legend;
+            json.credits = credits;
+            json.exporting = exporting;
+            json.highchartsOptions = highchartsOptions;
+            json.colors = colors;
+
+            $('#2023_12_Todesursachen_Geschlecht_Altersklassen_2022').highcharts(json);
+        });
+</script>
+
