@@ -1,0 +1,216 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+     <script src="https://code.highcharts.com/modules/broken-axis.js"></script>
+</head>
+<center>
+    <div id="2023_09_Geburtenziffer_TG_CH" style="max-width: 800px; height: 500px"></div>
+</center>
+
+
+
+<script>
+$(document).ready(function() {
+  Highcharts.wrap(Highcharts.Axis.prototype, 'getLinePath', function(proceed, lineWidth) {
+    var axis = this,
+      brokenAxis = axis.brokenAxis,
+      path = proceed.call(this, lineWidth),
+      start = path[0],
+      x = start[1],
+      y = start[2];
+
+    (brokenAxis.breakArray || []).forEach(function(brk) {
+      if (axis.horiz) {
+        x = axis.toPixels(brk.from);
+        path.splice(1, 0,
+          ['L', x - 4, y], // stop
+          ['M', x - 9, y + 5],
+          ['L', x + 1, y - 5], // left slanted line
+          ['M', x - 1, y + 5],
+          ['L', x + 9, y - 5], // higher slanted line
+          ['M', x + 4, y]
+        );
+      } else {
+        y = axis.toPixels(brk.from) + 30;
+        path.splice(1, 0,
+          ['L', x, y - 4], // stop
+          ['M', x + 5, y - 9], 
+          ['L', x - 5, y + 1], // lower slanted line
+          ['M', x + 5, y - 1],
+          ['L', x - 5, y + 9], // higher slanted line
+          ['M', x, y + 4]
+        );
+      }
+    });
+    return path;
+  });
+            var chart = {
+                type: 'line',
+                spacingBottom: 40
+            };
+            var title = {
+                text: 'Anzahl Kinder je Frau ist heute leicht höher als nach der Jahrtausendwende',
+                style: {
+                    fontSize: '18px'
+                },
+                align: 'left'
+            };
+
+            
+            var subtitle = {
+                text: 'Zusammengefasste Geburtenziffer¹, Kanton Thurgau',
+                style: {
+                    fontSize: '12px'
+                },
+                align: 'left'
+            };
+
+			var plotOptions = {
+                line: {
+                    marker: {
+                        enabled: false
+                    }
+                },
+            };
+            
+            var xAxis = {
+            	type: 'category',
+                categories: [1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],
+                tickWidth: 0,
+                labels: {
+                	rotation: 0,
+                    step: 5
+                    }                
+            };
+
+            var yAxis = {
+                gridLineWidth: 1,
+				lineWidth: 1,
+                title: '',
+                tickInterval: 0.5,
+                min: 0,
+                breaks: [{
+                	from:0.3,
+                    to: 1
+                }]
+            };
+            var series = [{
+                name: 'Kanton Thurgau',
+                color: '#3CA433',
+                data: [1.89,1.92,1.86,1.91,1.94,1.90,1.90,1.99,1.95,1.94,1.84,1.78,1.71,1.67,1.65,1.62,1.60,1.53,1.52,1.58,1.41,1.45,1.40,1.45,1.38,1.44,1.48,1.41,1.46,1.50,1.53,1.55,1.54,1.60,1.63,1.64,1.58,1.65,1.58,1.56,1.62,1.53]
+            },{
+            	name: 'Schweiz',
+                color: '#0064e6',
+                data: [1.55,1.56,1.52,1.53,1.52,1.53,1.52,1.57,1.56,1.59,1.58,1.58,1.51,1.49,1.48,1.50,1.48,1.47,1.48,1.50,1.38,1.39,1.39,1.42,1.42,1.44,1.46,1.48,1.50,1.52,1.52,1.53,1.52,1.54,1.54,1.55,1.52,1.52,1.48,1.46,1.52,1.39]
+            }];
+
+            var tooltip = {
+                formatter: function() {
+					return '<span style="font-size:11px; font-weight: bold">' + this.key + '<br><span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + addThousandsep(this.y.toFixed(2)) + ' Kinder';
+                        
+                	}
+                
+             };
+
+
+
+                var legend = {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    padding: 25,
+                    symbolPadding: 10,
+                    symbolWidth: 25,
+                    margin: -10,
+                    itemStyle: {
+                        fontWeight: 'normal'
+                    }
+                };
+
+                var credits = {
+                    text: '<b>1 </b>Durchschnittliche Anzahl Kinder von Frauen im gebärfähigen Alter (15 bis 49 Jahre)<br>Dienststelle für Statistik Kanton Thurgau <br>Datenquelle: Bundesamt für Statistik, BEVNAT, ESPOP (bis 2010), STATPOP (ab 2011)',
+                    href: false,
+                    style: {
+                        color: '#999999',
+                        cursor: false,
+                        fontSize: '10px'
+                    },
+                    position: {
+                        align: 'left',
+                        x: 10,
+                        y: -40
+                    }
+                };
+                var exporting = {
+                    allowHTML: true,
+                    enabled: true,
+                    filename: '2023_09_Geburtenziffer_TG_CH',
+                    buttons: {
+                        contextButton: {
+                            menuItems: "printChart separator downloadPNG downloadJPEG downloadSVG separator viewData downloadXLS".split(" ")
+                        }
+                    },
+
+                };
+
+                var highchartsOptions = Highcharts.setOptions({
+                    lang: {
+                        decimalPoint: '.',
+                        thousandsSep: "'",
+                        months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                        shortMonths: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+                        contextButtonTitle: 'Drucken, Download, Export',
+                        downloadJPEG: 'Download JPEG Bild',
+                        downloadPNG: 'Download PNG Bild',
+                        downloadSVG: 'Download SVG Vektor Bild',
+                        downloadXLS: 'Download XLS',
+                        printChart: 'Bild drucken',
+                        viewData: 'Datentabelle ein-/ausblenden',
+                        hideData: 'Datentabelle ein-/ausblenden',
+                        resetZoom: "Zoom zurücksetzen",
+                        resetZoomTitle: "Zoom zurücksetzen",
+                        drillUpText: "Zurück",
+                        numericSymbols: null
+                    }
+                });
+                
+
+
+                var json = {};
+                json.chart = chart;
+                json.title = title;
+                json.plotOptions = plotOptions;
+                json.subtitle = subtitle;
+                json.yAxis = yAxis;
+                json.xAxis = xAxis;
+                json.series = series;
+                json.tooltip = tooltip;
+                json.legend = legend;
+                json.credits = credits;
+                json.exporting = exporting;
+                json.highchartsOptions = highchartsOptions;
+
+
+                $('#2023_09_Geburtenziffer_TG_CH').highcharts(json);
+            });
+            
+  function addThousandsep(nStr) {
+                               nStr += '';
+                               x = nStr.split('.');
+                               x1 = x[0];
+                               x2 = x.length > 1 ? '.' + x[1] : '';
+                               var rgx = /(\d+)(\d{3})/;
+                               while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + "'" + '$2');
+                               }
+                               return x1 + x2;
+                               }
+</script>
