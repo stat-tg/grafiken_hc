@@ -1,0 +1,179 @@
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+</head>
+
+<center> 
+    <div id="2023_02_Alter_Pyramide_2022" style="height: 600px; max-width: 800px;"></div>
+</center>
+
+<script>
+      $(document).ready(function() {
+        var chart = {
+          type: 'bar'
+        };
+        var plotOptions = {
+        	bar: {
+            	stacking: true,
+                pointPadding: 0,
+      			groupPadding: 0,
+      			borderWidth: 1.0,
+                	borderColor: 'white',
+      			shadow: false
+            },
+        	series: {
+            	stacking: 'normal',
+                events: {
+             		legendItemClick: function () {
+                		if (this.name == 'Erwerbsfähiges Alter: 20- bis 64-Jahre') {
+                    		return false;
+                    	}
+                	}
+            	}
+        	}
+    	};
+        var title = {
+          text: 'Viele Thurgauer sind heute über 50 Jahre alt',
+          style: {
+            fontSize: '18px',
+          },
+          align: 'left'
+        };
+        var subtitle = {
+          text: 'Ständige Wohnbevölkerung nach Altersklassen und Geschlecht, Kanton Thurgau, 2022, in Personen',
+          style: {
+            fontSize: '12px'
+          },
+          align: 'left'
+        };
+        var xAxis = [{
+          reversed: false,
+          categories: ['0-4','5-9','10-14','15-19','20-24','25-29','30-34','35-39','40-44','45-49','50-54','55-59','60-64','65-69','70-74','75-79','80-84','85-89','90+']
+        },{
+          opposite: true,
+          reversed: false,
+          categories: ['0-4','5-9','10-14','15-19','20-24','25-29','30-34','35-39','40-44','45-49','50-54','55-59','60-64','65-69','70-74','75-79','80-84','85-89','90+'],
+          linkedTo: 0
+        }];
+        var yAxis = {
+          tickInterval: 2000,
+          lineWidth: 1,
+          gridLineWidth: 1,
+          title: '',
+          reversedStacks: true,
+          labels: {
+          	formatter: function () {
+          		return (Highcharts.numberFormat(Math.abs(this.value),0));
+          	}
+   		  },
+          min: -14000,
+          max: 14000
+        };
+        var legend = {
+          layout: 'horizontal',
+          align: 'center',
+          verticalAlign: 'bottom',
+          padding: 25,
+          symbolPadding: 10,
+          symbolWidth: 25,
+          margin: -10,
+          itemStyle: {
+            fontWeight: 'normal'
+          }
+        };
+        var series = [{
+          name: 'Männer',
+          color: '#0064e6',
+          data: [-7815,-7850,-7506,-7071,-7722,-8853,-10595,-10776,-10249,-9242,-10303,-11731,-10145,-8227,-6546,-5209,-3230,-1721,-780
+]
+        },{
+          name: 'Frauen',
+          color: '#3CA433',
+          data: [7299,7408,6863,6716,7046,8434,9986,10017,9477,8948,10347,11506,10049,8178,6793,5700,4125,2736,1647
+]
+        }];
+        var credits = {
+          text: 'Datenquelle: Dienststelle für Statistik Kanton Thurgau, Kantonale Bevölkerungserhebung',
+          href: false,
+          style: {
+          	color:'#999999',
+            cursor: false,
+            fontSize:'10px'
+          },
+          position: {
+            align: 'left',
+            x: 10,
+            y: -20
+          }
+        };
+        var exporting = {
+          allowHTML: true,
+          enabled: true,
+          filename:'2023_02_Alter_Pyramide_2022',
+          buttons: {
+            contextButton: {
+              menuItems: "printChart separator downloadPNG downloadJPEG downloadSVG separator downloadXLS viewData".split(" ")
+            }
+          },
+          /*csv: {
+            columnHeaderFormatter: function (item) {
+              if(item instanceof Highcharts.Axis) {
+                return 'Kategorie';
+              } else {
+                if(item instanceof Highcharts.Series) {
+                  return item.name;
+                }
+              }
+            }
+          }*/
+        };
+        var tooltip= {
+          shadow: false,
+          xDateFormat: '%B %Y',
+          formatter: function() {
+      		return '<b>'+ this.series.name +'</b><br/>'+
+         	this.x +': '+ Highcharts.numberFormat(Math.abs(this.y),0) +' Personen';
+    	  }
+        };
+        var highchartsOptions = Highcharts.setOptions ({
+        	lang: {
+        		decimalPoint: '.',
+           	 	thousandsSep: "'",
+           	 	months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            	weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+            	shortMonths: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+            	contextButtonTitle: 'Drucken, Download, Export',
+            	downloadJPEG: 'Download JPEG Bild',
+            	downloadPNG: 'Download PNG Bild',
+            	downloadSVG: 'Download SVG Vektor Bild',
+            	downloadXLS: 'Download XLS',
+            	printChart: 'Bild drucken',
+            	viewData: 'Datentabelle ein-/ausblenden',
+		hideData: 'Datentabelle ein-/ausblenden',
+            	resetZoom: "Zoom zurücksetzen",
+            	resetZoomTitle: "Zoom zurücksetzen",
+            	drillUpText: "Zurück"
+        	}        
+		});
+            
+        var json = {};
+        json.chart = chart;
+        json.plotOptions = plotOptions;
+        json.title = title;
+        json.subtitle = subtitle;
+        json.xAxis = xAxis;
+        json.yAxis = yAxis;
+        json.legend = legend;
+        json.series = series;
+        json.credits = credits;
+        json.exporting = exporting;
+        json.tooltip = tooltip;
+        json.highchartsOptions = highchartsOptions;
+        
+        $('#2023_02_Alter_Pyramide_2022').highcharts(json);
+      });
+</script>
