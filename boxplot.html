@@ -1,0 +1,184 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+</head>
+<center>
+    <div id="2022_03_Bruttolohn_Privatwirtschaft_Grossreg_2020" style="max-width: 800px; height: 500px"></div>
+</center>
+    <script>
+		$(document).ready(function() {
+        	var chart = {
+            	type: 'boxplot',
+                inverted: true,
+                SpacingBottom: 30,
+                marginBottom: 90
+            };
+            var plotOptions = {
+            	series: {
+            		animation: {
+                		duration: 2000
+            		},
+                    stacking: 'normal',
+                    borderWidth: 2
+        		}
+            };
+            var title = {
+                text: 'Thurgauer Löhne: Im Mittel knapp 300 Franken unter gesamtschweizerischem Niveau',
+                style: {
+                    fontSize: '18px'
+                },
+                align: 'left'
+            };
+            var subtitle = {
+                text: 'Monatlicher Bruttolohn in der Privatwirtschaft, Kanton Thurgau, Grossregionen und Schweiz, 2020, in CHF',
+                style: {
+                    fontSize: '12px'
+                },
+                align: 'left'
+            };
+            
+            var yAxis = {
+                gridLineWidth: 0,
+                title: {
+                	text: ''
+                },
+                lineWidth: 1,
+                min: 0,
+                max: 14000,
+                tickInterval: 2000,
+                showLastLabel: false
+                
+            };
+            var xAxis = {
+            	categories: ["Zürich (ZH)","Nordwestschweiz<br>(BS, BL, AG)","Zentralschweiz<br>(LU, UR, SZ, OW, NW, ZG)","<b>Schweiz</b>","Genferseeregion<br>(VD, VS, GE)","Espace Mittelland<br>(BE, FR, SO, NE, JU)","Ostschweiz<br>(GL, SH, AR, AI, SG, GR, TG)","<b>Thurgau</b>","Tessin (TI)"],
+                title: {
+                	text:''
+                },
+                gridLineWidth: 1, 
+                gridLineDashStyle: "LongDash"
+            };
+            
+            var series = [{
+            		name: 'Spannweite Löhne',
+                    keys: ['x','low','q1','median','q3','high','name','color','fillColor'],
+                    data: [
+                    [0,4430,5254,6908,9604,13566,'Zürich (ZH)','#0064e6','#00B4E8'],
+					[1,4418,5228,6575,8815,12643,'Nordwestschweiz (BS,BL,AG)','#0064e6','#00B4E8'],
+					[2,4347,5138,6380,8454,11863,'Zentralschweiz (LU, UR, SZ, OW, NW, ZG)','#0064e6','#00B4E8'],
+                    [3,4286,5079,6361,8445,11884,'Schweiz','#27408B','#0064e6'],
+					[4,4193,5027,6320,8537,12557,'Genferseeregion (VD, VS, GE)','#0064e6','#00B4E8'],
+					[5,4368,5124,6217,7812,10295,'Espace Mittelland (BE, FR, SO, NE, JU)','#0064e6','#00B4E8'],
+                    [6,4202,4951,6068,7596,9940,'Ostschweiz (GL, SH, AR, AI, SG, GR, TG)','#0064e6','#00B4E8'],
+					[7,4143,4951,6066,7465,9510,'Thurgau','#3CA433','#a2c510'],
+					[8,3449,4099,5203,6736,9640,'Tessin (TI)','#0064e6','#00B4E8']
+                    ],
+                    colorByPoint: true
+                    
+            	}
+            ];
+            
+			var tooltip = {
+  				pointFormatter: function() {
+     			const x = this.x;
+      			const currentData = this.series.data.find(data => data.x === x);
+      			const boxplotValues = currentData ? currentData.options : {};
+      			return `9. Dezil: ${boxplotValues.high} Franken<br>
+             		    3. Quartil: ${boxplotValues.q3} Franken<br>
+              			Medianlohn: ${boxplotValues.median} Franken<br>
+              			1. Quartil: ${boxplotValues.q1} Franken<br>
+              			1. Dezil: ${boxplotValues.low} Franken<br>`;
+   				}
+  			};
+            
+            var legend = {
+                	enabled: false
+            };
+            
+            var credits = {
+    			text: '<b>Hinweis</b>: Die Balken inkl. "Antennen" zeigen den Bereich, in dem 80 % der Löhne<br>liegen  (siehe Box "Lesehilfe").<br>Dienststelle für Statistik Kanton Thurgau <br>Datenquelle: Bundesamt für Statistik, Lohnstrukturerhebung 2020',
+    			href: false,
+                style: {
+                	color:'#999999',
+                    cursor: false,
+                    fontSize:'10px'
+                },
+    			position: {
+      				align: 'left',
+      				x: 10,
+      				y: -45
+    			}
+  			};
+            var exporting = {
+            	allowHTML: true,
+            	enabled: true,
+                filename:'2022_03_Bruttolohn_Privatwirtschaft_Grossreg_2020',
+            	buttons: {
+                	contextButton: {
+                    	menuItems: "printChart separator downloadPNG downloadJPEG downloadSVG separator downloadXLS viewData".split(" ")
+                    }
+            	}
+            };
+          	
+            var highchartsOptions = Highcharts.setOptions ({
+        		lang: {
+        			decimalPoint: '.',
+           		 	thousandsSep: "'",
+           		 	months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            		weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+            		shortMonths: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+
+            		contextButtonTitle: 'Drucken, Download, Export',
+            		downloadJPEG: 'Download JPEG Bild',
+            		downloadPNG: 'Download PNG Bild',
+            		downloadSVG: 'Download SVG Vektor Bild',
+            		downloadXLS: 'Download XLS',
+            		printChart: 'Bild drucken',
+            		viewData: 'Datentabelle ein-/ausblenden',
+            		resetZoom: "Zoom zurücksetzen",
+            		resetZoomTitle: "Zoom zurücksetzen",
+            		drillUpText: "Zurück",
+                    numericSymbols: null 
+        		}        
+			});
+			
+          	var colors = ["#0064e6","#0064e6","#B5B5B5","#0064e6","#0064e6","#0064e6","#3CA433","#0064e6","#0064e6"]
+            
+            var json = {};
+            json.chart = chart;
+            json.plotOptions = plotOptions;
+            json.title = title;
+            json.subtitle = subtitle;
+            json.yAxis = yAxis;
+            json.xAxis = xAxis;
+            json.series = series;
+            json.tooltip = tooltip;
+            json.legend = legend;
+            json.credits = credits;
+            json.exporting = exporting;
+            json.tooltip = tooltip;
+            json.highchartsOptions = highchartsOptions;
+            json.colors = colors;
+
+
+            $('#2022_03_Bruttolohn_Privatwirtschaft_Grossreg_2020').highcharts(json);
+        });
+function addThousandsep(nStr) { 
+                               nStr += ''; 
+                               x = nStr.split('.'); 
+                               x1 = x[0]; 
+                               x2 = x.length > 1 ? '.' + x[1] : ''; 
+                               var rgx = /(\d+)(\d{3})/; 
+                               while (rgx.test(x1)) { 
+                x1 = x1.replace(rgx, '$1' + "'" + '$2'); 
+                               } 
+                               return x1 + x2; 
+                               } 
+</script>
+
