@@ -1,0 +1,372 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+</head>
+
+<center>
+    <div class='buttons'>
+      <button id='2004'>
+        2004
+      </button>
+      <button id='2008'>
+        2008
+      </button>
+      <button id='2012'>
+        2012
+      </button>
+      <button id='2016'>
+        2016
+      </button>
+      <button id='2020' class='active'>
+        2020
+      </button>
+    </div>
+    <div id="test"></div>
+    
+</center>
+
+<script>
+var dataPrev = {
+  2020: [
+    ['SVP', 44],
+    ['CVP', 20],
+    ['FDP', 20],
+    ['SP', 17],
+    ['GP', 9],
+    ['EVP', 5],
+    ['EDU', 5],
+    ['glp', 7],
+    ['BDP', 3],
+  ],
+  2016: [
+    ['SVP', 41],
+    ['CVP', 21],
+    ['FDP', 18],
+    ['SP', 19],
+    ['GP', 9],
+    ['EVP', 5],
+    ['EDU', 6],
+    ['glp', 6],
+    ['BDP', 5],
+  ],
+  2012: [
+    ['SVP', 51],
+    ['CVP', 22],
+    ['FDP', 18],
+    ['SP', 17],
+    ['GP', 11],
+    ['EVP', 6],
+    ['EDU', 3],
+    ['glp', 2],
+    ['BDP', ''],
+  ],
+  2008: [
+    ['SVP', 47],
+    ['CVP', 22],
+    ['FDP', 20],
+    ['SP', 23],
+    ['GP', 13],
+    ['EVP', 4],
+    ['EDU', 1],
+    ['glp', ''],
+    ['BDP', ''],
+  ],
+  2004: [
+    ['SVP', 43],
+    ['CVP', 27],
+    ['FDP', 24],
+    ['SP', 22],
+    ['GP', 8],
+    ['EVP', 5],
+    ['EDU', 1],
+    ['glp',''],
+    ['BDP', ''],
+  ],
+};
+
+var data = {
+  2020: [
+    ['SVP', 46],
+    ['CVP', 18],
+    ['FDP', 18],
+    ['SP', 14],
+    ['GP', 15],
+    ['EVP', 6],
+    ['EDU', 5],
+    ['glp', 8],
+    ['BDP', 0],
+  ],
+  2016: [
+    ['SVP', 44],
+    ['CVP', 20],
+    ['FDP', 20],
+    ['SP', 17],
+    ['GP', 9],
+    ['EVP', 5],
+    ['EDU', 5],
+    ['glp', 7],
+    ['BDP', 3],
+  ],
+  2012: [
+    ['SVP', 41],
+    ['CVP', 21],
+    ['FDP', 18],
+    ['SP', 19],
+    ['GP', 9],
+    ['EVP', 5],
+    ['EDU', 6],
+    ['glp', 6],
+    ['BDP', 5],
+  ],
+  2008: [
+    ['SVP', 51],
+    ['CVP', 22],
+    ['FDP', 18],
+    ['SP', 17],
+    ['GP', 11],
+    ['EVP', 6],
+    ['EDU', 3],
+    ['glp', 2],
+    ['BDP', ''],
+  ],
+  2004: [
+    ['SVP', 47],
+    ['CVP', 22],
+    ['FDP', 20],
+    ['SP', 23],
+    ['GP', 13],
+    ['EVP', 4],
+    ['EDU', 1],
+    ['glp', ''],
+    ['BDP', ''],
+  ],
+};
+
+var countries = [
+  {
+    name: 'SVP',
+    color: '#3CA433',
+  },
+  {
+    name: 'CVP',
+    color: '#E39E00',
+  },
+  {
+    name: 'FDP',
+    color: '#0064e6',
+  },
+  {
+    name: 'SP',
+    color: '#CD3700',
+  },
+  {
+    name: 'GP',
+    color: '#a2c510',
+  },
+  {
+    name: 'EVP',
+    color: '#00B4E8',
+  },
+  {
+    name: 'EDU',
+    color: '#27408B',
+  },
+  {
+    name: 'glp',
+    color: '#b3ee3a',
+  },
+  {
+    name: 'BDP',
+    color: '#FFED00',
+  },
+];
+
+function getData(data) {
+  return data.map(function (country, i) {
+    return {
+      name: country[0],
+      y: country[1],
+      color: countries[i].color,
+    };
+  });
+}
+
+$(document).ready(function () {
+  var chart = {
+    type: 'column',
+    marginBottom: 60,
+  };
+  var title = {
+    text: 'Mandatsverteilung Grosser Rat nach Parteien (Legislatur 2020-2024)',
+    style: {
+      fontSize: '18px',
+    },
+    align: 'left',
+  };
+  var subtitle = {
+    text: 'Verglichen mit Mandatsverteilung der vorgehenden Legislatur 2016-2020, Kanton Thurgau',
+    align: 'left',
+    style: {
+      fontSize: '12px',
+    },
+  };
+  var plotOptions = {
+    series: {
+      grouping: false,
+      borderWidth: 0,
+    },
+  };
+  var legend = {
+    enabled: false,
+  };
+  var tooltip = {
+    shared: true,
+    headerFormat:
+      '<span style="font-size: 15px">{point.point.name}</span><br/>',
+    pointFormat:
+      '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y} Mandate</b><br/>',
+  };
+  var xAxis = {
+    type: 'category',
+    max: 8,
+    labels: {
+      useHTML: true,
+      animate: true,
+      formatter: function () {
+        var value = this.value,
+          output;
+
+        countries.forEach(function (country) {
+          if (country.name === value) {
+            output = country.name;
+          }
+        });
+
+        return output;
+      },
+    },
+  };
+  var yAxis = [
+    {
+      title: {
+        text: 'Anzahl Mandate',
+      },
+      showFirstLabel: false,
+    },
+  ];
+
+  var credits = {
+    text: 'Dienststelle für Statistik Kanton Thurgau <br>Datenquelle: Staatskanzlei Kanton Thurgau',
+    href: false,
+    position: {
+      align: 'left',
+      x: 10,
+      y: -20,
+    },
+    style: {
+      fontSize: '10px',
+    },
+  };
+
+  var series = [
+    {
+      color: 'rgb(158, 159, 163)',
+      pointPlacement: -0.2,
+      linkedTo: 'main',
+      data: dataPrev[2020].slice(),
+      name: '2016',
+    },
+    {
+      name: '2020',
+      id: 'main',
+      dataSorting: {
+        enabled: true,
+        matchByName: true,
+      },
+      dataLabels: [
+        {
+          enabled: true,
+          inside: true,
+          style: {
+            fontSize: '16px',
+          },
+        },
+      ],
+      data: getData(data[2020]).slice(),
+    },
+  ];
+  var exporting = {
+    allowHTML: true,
+  };
+
+  var json = {};
+  json.chart = chart;
+  json.title = title;
+  json.plotOptions = plotOptions;
+  json.subtitle = subtitle;
+  json.yAxis = yAxis;
+  json.xAxis = xAxis;
+  json.series = series;
+  json.tooltip = tooltip;
+  json.legend = legend;
+  json.credits = credits;
+  json.exporting = exporting;
+  //json.highchartsOptions = highchartsOptions;
+  $('#test').highcharts(json);
+	
+	var years = [2020, 2016, 2012, 2008, 2004];
+
+years.forEach(function (year) {
+  var btn = document.getElementById(year);
+
+  btn.addEventListener('click', function () {
+    document
+      .querySelectorAll('.buttons button.active')
+      .forEach(function (active) {
+        active.className = '';
+      });
+    btn.className = 'active';
+ var chart = $('#test').highcharts();
+    chart.update(
+      {
+        title: {
+          text:
+            'Mandatsverteilung Grosser Rat ' +
+            year +
+            '-' +
+            (year + 4) +
+            ' ,Kanton Thurgau',
+        },
+        subtitle: {
+          text:
+            'Verglichen mit vorhergehender Legislaturperiode ' +
+            (year - 4) +
+            '-' +
+            year,
+        },
+        series: [
+          {
+            name: year - 4,
+            data: dataPrev[year].slice(),
+          },
+          {
+            name: year,
+            data: getData(data[year]).slice(),
+          },
+        ],
+      },
+      true,
+      false,
+      {
+        duration: 800,
+      }
+    );
+  });
+});
+});
+</script>
