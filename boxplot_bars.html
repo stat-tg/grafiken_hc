@@ -1,0 +1,180 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+<center>
+    <div id="2023_03_SteuerkraftStreuung_2005_2022" style="max-width: 800px; height: 500px"></div>
+</center>
+    <script>
+		$(document).ready(function() {
+        	var chart = {
+            	type: 'column',      
+                SpacingBottom: 40,
+                marginBottom: 60
+            };
+            var plotOptions = {
+            	series: {
+            		animation: {
+                		duration: 2000
+            		},
+                    stacking: 'normal',
+                    borderWidth: 2
+        		}
+            };
+            var title = {
+                text: 'Spannweite zwischen tiefster und höchster Steuerkraft ist 2022 wieder geringer als im Vorjahr',
+                style: {
+                    fontSize: '18px'
+                },
+                align: 'left'
+            };
+            var subtitle = {
+                text: 'Streuung der Steuerkraft pro Einwohnerin oder Einwohner in den Thurgauer Gemeinden, Kanton Thurgau, 2005-2022, in CHF',
+                style: {
+                    fontSize: '12px'
+                },
+                align: 'left'
+            };
+            
+            var yAxis = {
+                gridLineWidth: 0,
+                title: {
+                	text: ''
+                },
+                lineWidth: 1
+            };
+            var xAxis = {
+            	categories: [2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],
+                title: {
+                	text:''
+                },
+                tickInterval: 2
+            };
+            var series = [{
+            		name: 'Maximum',
+                	data: [2202,2572,2901,2483,2636,2838,2531,2491,3057,3559,2530,2442,2282,2825,2934,3184,4225,3649],
+                    color: '#A2C510'
+            	}, {
+                	name: '3. Quantil',
+                    data: [258,277,273,266,259,344,305,279,285,232,330,235,366,331,401,364,381,343],
+                    color: '#00B4E8'
+            	}, {
+                	name: 'Median',
+                    data: [150,234,209,192,192,203,163,174,158,150,160,228,131,225,146,237,236,175],
+                    color: '#00B4E8'
+            	}, {
+                	name: '1. Quantil',
+                    data: [374,296,360,301,275,325,387,402,375,369,382,320,455,422,439,241,320,263],
+                    color: '#A2C510'
+            	}, {
+                	name: 'Minimum',
+                    data: [828,937,973,1067,1120,1100,1039,1043,1137,1198,1255,1294,1247,1323,1388,1546,1503,1562],
+                    color: 'transparent'
+            	}
+            ];
+            
+			var tooltip = {
+            	shared: true,
+                formatter: function() {
+                	var i;
+					for (i = 2005; i < 2023; i++) { 
+    					if(this.x == i) {
+                    		return '<b>' + this.x + '</b><br>Höchste Steuerkraft: <b>' + addThousandsep(this.points[1].y + this.points[2].y + this.points[3].y + this.points[4].y + this.points[0].y) + ' </span> CHF<br/>' + '</b><br>Oberes Quartil (75%): <b>' + addThousandsep(this.points[1].y + this.points[2].y + this.points[3].y + this.points[4].y + ' </span> CHF<br/>') + '</b><br>Mittlere Steuerkraft: <b>' + addThousandsep(this.points[2].y + this.points[3].y + this.points[4].y + ' </span> CHF<br/>') + '</b><br>Unteres Quartil (25%): <b>' + addThousandsep(this.points[3].y + this.points[4].y + ' </span> CHF<br/>') + '</b><br>Tiefeste Steuerkraft: <b>' + addThousandsep(this.points[4].y + ' </span> CHF<br/>');
+                    	} 
+                    }
+                }
+  			};
+            
+            var legend = {
+                	enabled: false
+            };
+            
+            var credits = {
+    			text: 'Dienststelle für Statistik Kanton Thurgau <br>Datenquelle: Steuerverwaltung Kanton Thurgau',
+    			href: false,
+                style: {
+                	color:'#999999',
+                    cursor: false,
+                    fontSize:'10px'
+                },
+    			position: {
+      				align: 'left',
+      				x: 10,
+      				y: -20
+    			}
+  			};
+            var exporting = {
+            	allowHTML: true,
+            	enabled: true,
+                filename:'2023_03_SteuerkraftStreuung_2005_2022',
+            	buttons: {
+                	contextButton: {
+                    	menuItems: "printChart separator downloadPNG downloadJPEG downloadSVG downloadXLS".split(" ")
+                    }
+            	}
+            };
+          	
+            var highchartsOptions = Highcharts.setOptions ({
+        		lang: {
+        			decimalPoint: '.',
+           		 	thousandsSep: "'",
+           		 	months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            		weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+            		shortMonths: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+
+            		contextButtonTitle: 'Drucken, Download, Export',
+            		downloadJPEG: 'Download JPEG Bild',
+            		downloadPNG: 'Download PNG Bild',
+            		downloadSVG: 'Download SVG Vektor Bild',
+            		downloadXLS: 'Download XLS',
+            		printChart: 'Bild drucken',
+            		viewData: 'Datentabelle ein-/ausblenden',
+            		resetZoom: "Zoom zurücksetzen",
+            		resetZoomTitle: "Zoom zurücksetzen",
+            		drillUpText: "Zurück",
+                    numericSymbols: null 
+        		}        
+			});
+			
+          
+            var json = {};
+            json.chart = chart;
+            json.plotOptions = plotOptions;
+            json.title = title;
+            json.subtitle = subtitle;
+            json.yAxis = yAxis;
+            json.xAxis = xAxis;
+            json.series = series;
+            json.tooltip = tooltip;
+            json.legend = legend;
+            json.credits = credits;
+            json.exporting = exporting;
+            json.tooltip = tooltip;
+            json.highchartsOptions = highchartsOptions;
+
+
+            $('#2023_03_SteuerkraftStreuung_2005_2022').highcharts(json);
+        });
+function addThousandsep(nStr) { 
+                               nStr += ''; 
+                               x = nStr.split('.'); 
+                               x1 = x[0]; 
+                               x2 = x.length > 1 ? '.' + x[1] : ''; 
+                               var rgx = /(\d+)(\d{3})/; 
+                               while (rgx.test(x1)) { 
+                x1 = x1.replace(rgx, '$1' + "'" + '$2'); 
+                               } 
+                               return x1 + x2; 
+                               } 
+function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+  }
+</script>
+
