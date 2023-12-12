@@ -1,0 +1,205 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://blaacklabel.github.io/grouped_categories/grouped-categories.js"></script>
+
+</head>
+<center>
+    <div id="Werte_nur_in_Tooltip" style="max-width: 800px; height: 500px"></div>
+</center>
+    <script>
+		$(document).ready(function() {
+        	var chart = {
+            	type: 'bar',
+                spacingBottom: 60
+            };
+            var plotOptions = {
+            	series: {
+                    stacking: "normal"
+                }
+            };
+        	 var title = {
+                text: 'Der grösste Teil der Erträge stammt aus Steuereinnahmen',
+                style: {
+                    fontSize: '18px'
+                },
+                align: 'left'
+            };
+            var subtitle = {
+                text: 'Bruttoaufwand (+) und Bruttoertrag (-) der Erfolgsrechnung nach Funktionen, Summe aller Thurgauer Gemeinden, 2020, in Mio. CHF',
+                style: {
+                    fontSize: '12px'
+                },
+                align: 'left'
+            };
+            
+            
+            var yAxis = {
+                gridLineWidth: 1,
+                lineWidth: 1,
+                title: '',
+                tickInterval: 250,
+                plotLines: [{
+                	value: 0,
+                    width: 3,
+                    color: "#e6e6e6"
+                    }]
+           };
+            
+            var xAxis = {
+            	categories: ["Allgemeine Verwaltung","Öffentliche Ordnung und Sicherheit, Verteidigung","Kultut, Sport und Freizeit","Gesundheit",
+                            "Soziale Sicherheit","Verkehr und Nachrichtenübermittlung","Umwelt und Raumordnung","Volkswirtschaft","Finanzen und Steuern","Total¹"],
+                
+            };
+            
+			
+            var tooltip = {
+                shared: true,
+                crosshairs: true,
+                valueDecimals: 2
+           
+    	};
+            var series = [{
+                index: 0,
+            	name: 'Bruttoertrag',
+                color: "#0064e6",
+                data:[-68.97938719,-40.03011718,-16.96237691,-8.21137726,-75.90533103,-41.71664145,-95.77594834,-118.0261173,-465.5395216,-933.885179] 
+            },{
+                index: 0,
+                name: 'Bruttoaufwand',
+                color: "#3CA433",
+                data:[147.7749701,63.39058421,58.43909887,52.41343438,167.5641888,111.3814314,121.8465434,120.8313776,32.64528808,899.6981362] 
+            },{
+                index: 2,
+                name: 'Nettoaufwand',
+                color: "grey",
+                type: "bar",
+                marker: {
+                    enabled: false,
+                    states: {
+                        hover: {
+                            enabled: false
+                        }}},
+                visible: false,
+                data:[78.79558291,23.36046703,41.47672196,44.20205712,91.6588578,69.66478991,26.07059504,2.80526035,-432.8942335,-34.18704283],
+                tooltip: {
+                    useHTML: true,
+                    pointFormat: '',
+                    }
+            },{
+                index: 1,
+                name: 'Nettoaufwand',
+                color: "transparent",
+                type: "line",
+                marker: {
+                    enabled: false,
+                    states: {
+                        hover: {
+                            enabled: false
+                        }}},
+                visible: true,
+                showInLegend: false,
+                data:[78.79558291,23.36046703,41.47672196,44.20205712,91.6588578,69.66478991,26.07059504,2.80526035,-432.8942335,-34.18704283] 
+            },{
+                index: 1,
+                name: 'Vorjahresveränderung in %',
+                color: "transparent",
+                type: "line",
+                marker: {
+                    enabled: false,
+                    states: {
+                        hover: {
+                            enabled: false
+                        }}},
+                visible: true,
+                showInLegend: false,
+                data:[0.780267404,2.247052287,7.465686299,-1.390448847,0.464293077,5.87026957,4.496676552,34.32738069,1.2,2.7] 
+            }
+
+            ];
+
+            var legend = {
+            	enabled: true,
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
+				padding: 25,
+    			symbolPadding: 10,
+    			symbolWidth: 25,
+                margin: -10,
+				itemStyle: {
+                	fontWeight: 'normal'
+            	}
+            };
+            
+            var credits = {
+    			text: '<span style="font-size: 10px; font-weight: bold; color: #27408B">Um den Nettaufwand und die Vorjahresveränderung des Nettoaufwandes einzublenden fahren Sie bitte mit der Maus über die Grafik</span><br><b>¹</b>Die Funktion Bildung (20.7 Mio. CHF) umfasst nur die 6 Gemeinden mit integrierter Schulgemeinde, wird daher nicht einzeln aufgeführt. <br>Im Total des Nettoaufwandes ist sie enthalten.  <br>Dienststelle für Statistik Kanton Thurgau<br>Datenquelle: Finanzverwaltung Kanton Thurgau',
+    			href: false,
+                style: {
+                	color:'#999999',
+                    cursor: false,
+                    fontSize:'10px'
+                },
+    			position: {
+      				align: 'left',
+      				x: 10,
+      				y: -60
+    			}
+  			};
+            var exporting = {
+            	allowHTML: true,
+            	enabled: true,
+                filename:'Werte_nur_in_Tooltip',
+            	buttons: {
+                	contextButton: {
+                    	menuItems: "printChart separator downloadPNG downloadJPEG downloadSVG".split(" ")
+                    }
+            	},
+                
+            };
+            
+            var highchartsOptions = Highcharts.setOptions ({
+        		lang: {
+        			decimalPoint: '.',
+           		 	thousandsSep: "'",
+           		 	months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            		weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+            		shortMonths: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+            		contextButtonTitle: 'Drucken, Download, Export',
+            		downloadJPEG: 'Download JPEG Bild',
+            		downloadPNG: 'Download PNG Bild',
+            		downloadSVG: 'Download SVG Vektor Bild',
+            		downloadXLS: 'Download XLS',
+            		printChart: 'Bild drucken',
+            		viewData: 'Datentabelle ein-/ausblenden',
+            		resetZoom: "Zoom zurücksetzen",
+            		resetZoomTitle: "Zoom zurücksetzen",
+            		drillUpText: "Zurück",
+                    numericSymbols: null 
+
+        		}        
+			});
+
+            var json = {};
+            json.chart = chart;
+            json.plotOptions = plotOptions;
+            json.title = title;
+            json.subtitle = subtitle;
+            json.yAxis = yAxis;
+            json.xAxis = xAxis;
+            json.tooltip = tooltip;
+            json.series = series;
+            json.legend = legend;
+            json.credits = credits;
+            json.exporting = exporting;
+            json.highchartsOptions = highchartsOptions;
+
+            $('#Werte_nur_in_Tooltip').highcharts(json);
+        });
+
+</script>
+
