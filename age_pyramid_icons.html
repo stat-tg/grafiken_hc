@@ -104,6 +104,8 @@
           name: 'help1',
           type: "line",
           enableMouseTracking: false,
+          includeInCSVExport: false,
+          showInLegend: false,
           color: 'transparent',
           data: ['','','','','',-3000,'','','','','','','','','','','','','',''],
           marker: {
@@ -111,8 +113,7 @@
                         width: 80,
                         height: 80
        	 				},
-          visible: true,
-          showInLegend: false
+          visible: true
         },{  /* Daten im Fabasoft beim Jahrbuch Ordner */
           name: 'Männer, Krebs',
           color: '#27408B',
@@ -150,8 +151,8 @@
        	 				},
           visible: true,
           showInLegend: false,
-          enableMouseTracking: false
-
+          enableMouseTracking: false,
+          includeInCSVExport: false
         },{  /* Daten im Fabasoft beim Jahrbuch Ordner */
           name: 'Frauen, Schwangerschaft/Wochenbett',
           color: '#a2c510',
@@ -203,7 +204,7 @@
           filename:'2023_12_Hospitalisierung_Thurgauer_Akut_Pyramide_2022',
           buttons: {
             contextButton: {
-              menuItems: "printChart separator downloadPNG downloadJPEG downloadSVG separator viewData downloadXLS".split(" ")
+              menuItems: "printChart separator downloadPNG downloadJPEG downloadSVG separator viewData downloadCSV".split(" ")
             }
           },
           /*csv: {
