@@ -1,0 +1,198 @@
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+<center>
+    <div id="2023_04_Gemeindesteuerfuss_Karte_2023" style="max-width: 800px; height: 500px"></div>
+
+</center>
+
+
+<script>
+  // Prepare random data
+  var data = [
+['Arbon',72],
+['Dozwil',42],
+['Egnach',55],
+['Hefenhofen',66],
+['Horn',34],
+['Kesswil',45],
+['Roggwil (TG)',44],
+['Romanshorn',70],
+['Salmsach',59],
+['Sommeri',55],
+['Uttwil',48],
+['Amriswil',63],
+['Bischofszell',68],
+['Erlen',52],
+['Hauptwil-Gottshaus',55],
+['Hohentannen',50],
+['Kradolf-Schönenberg',55],
+['Sulgen',50],
+['Zihlschlacht-Sitterdorf',65],
+['Basadingen-Schlattingen',50],
+['Diessenhofen',47],
+['Schlatt (TG)',48],
+['Aadorf',61],
+['Felben-Wellhausen',50],
+['Frauenfeld',62],
+['Gachnang',42],
+['Hüttlingen',60],
+['Matzingen',56],
+['Neunforn',39],
+['Stettfurt',48],
+['Thundorf',52],
+['Uesslingen-Buch',52],
+['Warth-Weiningen',30],
+['Altnau',55],
+['Bottighofen',34],
+['Ermatingen',40],
+['Gottlieben',47],
+['Güttingen',54],
+['Kemmental',58],
+['Kreuzlingen',64],
+['Langrickenbach',65],
+['Lengwil',54],
+['Münsterlingen',37],
+['Tägerwilen',33],
+['Wäldi',52],
+['Affeltrangen',48],
+['Bettwiesen',47],
+['Bichelsee-Balterswil',54],
+['Braunau',49],
+['Eschlikon',48],
+['Fischingen',60],
+['Lommis',45],
+['Münchwilen (TG)',61],
+['Rickenbach (TG)',51],
+['Schönholzerswilen',58],
+['Sirnach',52],
+['Tobel-Tägerschen',55],
+['Wängi',49],
+['Wilen (TG)',42],
+['Wuppenau',53],
+['Berlingen',50],
+['Eschenz',49],
+['Herdern',57],
+['Homburg',50],
+['Hüttwilen',48],
+['Mammern',39],
+['Müllheim',48],
+['Pfyn',63],
+['Raperswilen',63],
+['Salenstein',44],
+['Steckborn',50],
+['Wagenhausen',56],
+['Amlikon-Bissegg',65],
+['Berg (TG)',42],
+['Birwinken',57],
+['Bürglen (TG)',59],
+['Bussnang',47],
+['Märstetten',55],
+['Weinfelden',55],
+['Wigoltingen',62],
+
+];
+
+  Highcharts.getJSON('https://raw.githubusercontent.com/stat-tg/tg_map/main/Gemeinden.geo.json', function (geojson) {
+
+    // Initialize the chart
+    Highcharts.mapChart('2023_04_Gemeindesteuerfuss_Karte_2023', {
+        chart: {
+            map: geojson
+        },
+
+        title: {
+            text: 'Gemeindesteuerfüsse',
+                style: {
+                    fontSize: '18px'
+                },
+                align: 'left'        },
+        subtitle: {
+            text: 'Gemeindesteuerfüsse der Politischen Gemeinden, Kanton Thurgau, 2023, in %',
+                style: {
+                    fontSize: '12px'
+                },
+                align: 'left'
+        },
+        accessibility: {
+            typeDescription: 'Gemeindesteuerfüsse Kanton Thurgau'
+        },
+        
+        mapNavigation: {
+            enabled: false,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+        tooltip: {
+       formatter: function () {
+			 console.log('this object: ', this)
+			 
+                    return this.series.name + '</b><br>' +
+                        'Gemeinde: ' + this.point.gemeinde_name + ': ' + this.point.value + ' %';
+                }
+        },
+        colorAxis: {
+            tickPixelInterval: 100
+        },
+
+        series: [{
+            data: data,
+            keys: ['gemeinde_name', 'value'],
+            joinBy: 'gemeinde_name',
+            name: 'Gemeindesteuerfuss',
+            dataLabels: {
+                enabled: true,
+                format: '{point.properties.postal}'
+            }
+        }],
+        legend : {
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
+				padding: 25,
+    			//symbolPadding: 10,
+    			//symbolWidth: 25,
+                margin: -10,
+				itemStyle: {
+               	fontWeight: 'normal'
+            	}
+            },
+            
+            credits : {
+    			text: 'Dienststelle für Statistik Kanton Thurgau <br>Datenquelle: Steuerverwaltung Kanton Thurgau',
+    			href: false,
+                style: {
+                	color:'#999999',
+                    cursor: false,
+                    fontSize:'10px'
+                },
+    			position: {
+      				align: 'left',
+      				x: 10,
+      				y: -45
+    			}
+  			},
+            exporting : {
+            	allowHTML: true,
+            	enabled: true,
+                filename:'2023_04_SteuerfuesseJuristischePersonenNachGemeinden_2005_2023',
+            	buttons: {
+                	contextButton: {
+                    	menuItems: "printChart separator downloadPNG downloadJPEG downloadSVG".split(" ")
+                    }
+            	},
+                
+            },
+    });
+});
+
+</script>
